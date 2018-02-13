@@ -4,68 +4,102 @@
  * ----------------------------------------------------------------------------
  */
 
-.wp-block-organic-profile-block ul,
-.wp-block-organic-profile-block li {
-	list-style: none;
-	margin: 0; padding: 0;
+.wp-block-organic-pricing-table-block {
+	position: relative;
+	background-color: #f4f4f4;
+	border-radius: 3px;
+	margin-top: 24px;
+	margin-bottom: 24px;
 }
-.wp-block-organic-profile-block {
-	display: flex;
-	align-items: stretch;
-	background-color: #ffffff;
-	margin: 12px 0px;
-	box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-}
-.wp-block-organic-profile-block .organic-profile-image {
-	display: flex;
-	align-items: center;
-	background-size: cover;
-	background-position: center;
-	width: 60%;
-}
-.wp-block-organic-profile-block .organic-profile-image img {
-	opacity: 0;
-	margin: -9999px;
-}
-.wp-block-organic-profile-block .organic-profile-content {
-	width: 100%;
-	align-self: center;
-	padding: 18px;
-	box-sizing: border-box;
-}
-.wp-block-organic-profile-block .organic-profile-content h3 {
+.organic-pricing-table-header h2,
+.organic-pricing-table-header h4 {
+	line-height: 1.4;
 	margin: 0px;
 	padding: 0px;
 }
-.wp-block-organic-profile-block .organic-profile-content h5 {
-	color: rgba(0, 0, 0, 0.4);
-	text-transform: uppercase;
+.organic-pricing-table-header h2 {
+	font-size: 2rem;
+}
+.organic-pricing-table-header h4 {
+	font-size: 1.4rem;
+	font-weight: 400;
+	opacity: 0.6;
+}
+.organic-pricing-table-price {
+	/* background-color: rgba(0, 0, 0, 0.04); */
+	/* background-color: rgba(255, 255, 255, 0.08); */
+	padding: 18px;
+	box-sizing: border-box;
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.organic-pricing-table-price h6 {
+	font-size: 3.2rem;
 	margin: 0px;
-	padding: 8px 0px;
+	padding: 0px;
 }
-.wp-block-organic-profile-block .organic-profile-content p {
-	line-height: 1.6;
+.organic-pricing-table-price p {
+	padding: 0px;
+	opacity: 0.6;
+}
+.organic-pricing-table-content ul,
+.organic-pricing-table-content li {
+	list-style: none;
 	margin: 0px;
-	padding: 8px 0px;
+	box-sizing: border-box;
 }
-.wp-block-organic-profile-block .organic-profile-social {
-	padding-top: 12px;
+.organic-pricing-table-content ul {
+	padding: 0px;
 }
-.wp-block-organic-profile-block .organic-profile-social:empty {
-	display: none;
+.organic-pricing-table-content li {
+	line-height: 1.8;
+	padding: 6px 24px;
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
-.wp-block-organic-profile-block .organic-profile-social .social-link {
-	color: rgba(0, 0, 0, 0.24);
-	padding: 6px 12px;
-	font-size: 18px;
-	text-decoration: none;
-	border-left: 1px solid rgba(0, 0, 0, 0.12);
-	border-bottom: none;
-	box-shadow: none;
+.organic-pricing-table-content li:last-child {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
-.wp-block-organic-profile-block .organic-profile-social .social-link:hover {
-	color: rgba(0, 0, 0, 1);
+.organic-pricing-table-content li::before {
+	font-family: 'FontAwesome';
+	content: '\f058';
+	margin-right: 8px;
+	opacity: 0.4;
 }
-.wp-block-organic-profile-block .organic-profile-social .social-link:first-child {
+/* .organic-pricing-table-content li:nth-child(even) {
+	background-color: rgba(255, 255, 255, 0.04);
+} */
+/* .organic-pricing-table-content li:nth-child(odd) {
+	background-color: rgba(255, 255, 255, 0.08);
+} */
+.organic-pricing-table-header,
+.organic-pricing-table-footer {
+	padding: 24px;
+	box-sizing: border-box;
+}
+a.organic-pricing-button {
+	position: relative;
+	display: block;
+	background-color: #99cc33;
+	color: #ffffff !important;
+	text-decoration: none !important;
+	padding: 12px 24px;
 	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+a.organic-pricing-button::before {
+	position: absolute;
+	top: 0; left: 0;
+	content: '';
+	background-color: rgba(0, 0, 0, 0);
+	width: 100%;
+	height: 100%;
+	border-radius: 3px;
+	transition: all .25s ease-in-out;
+}
+a.organic-pricing-button:hover::before {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+a.organic-pricing-button span {
+	position: relative;
+	z-index: 8;
 }

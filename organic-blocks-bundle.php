@@ -43,6 +43,21 @@ if ( ! defined( 'OBB_URL' ) ) {
 }
 
 /**
+ * Enqueue the plugin assets.
+ *
+ * @since 1.0.0
+ */
+function obb_scripts() {
+
+	wp_enqueue_style(
+		'obb-fontawesome', // Handle.
+		plugins_url( 'css/font-awesome.css', __FILE__ ) // Font Awesome for social media icons.
+	);
+
+}
+add_action( 'wp_enqueue_scripts', 'obb_scripts' );
+
+/**
  * BLOCK: Profile Block.
  */
 require_once( OBB_DIR . '/block/profile/index.php' );

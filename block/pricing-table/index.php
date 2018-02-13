@@ -56,10 +56,6 @@ function organic_pricing_table_block_block_assets() {
 		array( 'wp-blocks' ), // Dependency to include the CSS after it.
 		filemtime( plugin_dir_path( __FILE__ ) . 'style.css' ) // filemtime — Gets file modification time.
 	);
-	wp_enqueue_style(
-		'organic-pricing-table-block-fontawesome', // Handle.
-		plugins_url( 'font-awesome.css', __FILE__ ) // Font Awesome for social media icons.
-	);
 } // End function organic_pricing_table_block_block_assets().
 
 // Hook: Frontend assets.
