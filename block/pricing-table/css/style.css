@@ -7,13 +7,15 @@
 .wp-block-organic-pricing-table-block {
 	position: relative;
 	background-color: #f4f4f4;
-	border-radius: 3px;
-	margin-top: 24px;
-	margin-bottom: 24px;
+	width: 100%;
+	border: 1px solid rgba(0 ,0, 0, 0.08);
+	border-radius: 2px;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 .organic-pricing-table-header h2,
 .organic-pricing-table-header h4 {
-	line-height: 1.4;
+	line-height: 1.2;
 	margin: 0px;
 	padding: 0px;
 }
@@ -23,14 +25,13 @@
 .organic-pricing-table-header h4 {
 	font-size: 1.4rem;
 	font-weight: 400;
-	opacity: 0.6;
+	opacity: 0.8;
 }
 .organic-pricing-table-price {
-	/* background-color: rgba(0, 0, 0, 0.04); */
-	/* background-color: rgba(255, 255, 255, 0.08); */
 	padding: 18px;
 	box-sizing: border-box;
 	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 .organic-pricing-table-price h6 {
 	font-size: 3.2rem;
@@ -54,22 +55,11 @@
 	line-height: 1.8;
 	padding: 6px 24px;
 	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
-.organic-pricing-table-content li:last-child {
-	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+.organic-pricing-table-footer {
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
-.organic-pricing-table-content li::before {
-	font-family: 'FontAwesome';
-	content: '\f058';
-	margin-right: 8px;
-	opacity: 0.4;
-}
-/* .organic-pricing-table-content li:nth-child(even) {
-	background-color: rgba(255, 255, 255, 0.04);
-} */
-/* .organic-pricing-table-content li:nth-child(odd) {
-	background-color: rgba(255, 255, 255, 0.08);
-} */
 .organic-pricing-table-header,
 .organic-pricing-table-footer {
 	padding: 24px;
@@ -102,4 +92,23 @@ a.organic-pricing-button:hover::before {
 a.organic-pricing-button span {
 	position: relative;
 	z-index: 8;
+}
+
+.organic-pricing-table-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 12px auto;
+}
+.organic-pricing-table-wrapper .wp-block-organic-pricing-table-block:first-child:nth-last-child(2),
+.organic-pricing-table-wrapper .wp-block-organic-pricing-table-block:first-child:nth-last-child(2) ~ .wp-block-organic-pricing-table-block {
+	width: 50%;
+}
+.organic-pricing-table-wrapper .wp-block-organic-pricing-table-block:first-child:nth-last-child(3),
+.organic-pricing-table-wrapper .wp-block-organic-pricing-table-block:first-child:nth-last-child(3) ~ .wp-block-organic-pricing-table-block {
+	width: 33.33%;
+}
+.organic-pricing-table-wrapper .wp-block-organic-pricing-table-block:first-child:nth-last-child(4),
+.organic-pricing-table-wrapper .wp-block-organic-pricing-table-block:first-child:nth-last-child(4) ~ .wp-block-organic-pricing-table-block {
+	width: 25%;
 }

@@ -1,0 +1,22 @@
+/**
+ * ----------------------------------------------------------------------------
+ * Editor CSS
+ * ----------------------------------------------------------------------------
+ */
+
+.wp-block-organic-pricing-table-block {
+	position: relative;
+	background-color: #f9f9f9;
+}
+span.organic-pricing-button {
+	display: block;
+	background-color: #99cc33;
+	color: #ffffff;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+.organic-pricing-button-link.blocks-rich-text__tinymce.mce-content-body {
+	left: 0;
+}

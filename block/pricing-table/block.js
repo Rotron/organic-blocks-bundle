@@ -52,7 +52,15 @@
 			buttonText: {
 				type: 'array',
 				source: 'children',
-				selector: 'a',
+				selector: '.organic-pricing-button-link',
+			},
+			headerTextColor: {
+				type: 'string',
+				default: '#000000',
+			},
+			headerBGColor: {
+				type: 'string',
+				default: '#eeeeee',
 			},
 			backgroundColor: {
 				type: 'string',
@@ -74,18 +82,15 @@
 			var alignment = props.attributes.alignment;
 			var attributes = props.attributes;
 			var buttonText = props.attributes.buttonText;
-			// var buttonLink = props.attributes.buttonLink;
+			var buttonLink = props.attributes.buttonLink;
 			var textColor = props.attributes.textColor;
 			var buttonColor = props.attributes.buttonColor;
 			var backgroundColor = props.attributes.backgroundColor;
+			var headerBGColor = props.attributes.headerBGColor;
+			var headerTextColor = props.attributes.headerTextColor;
 
 			function onChangeAlignment( newAlignment ) {
 				props.setAttributes( { alignment: newAlignment } );
-			}
-
-			function setLink( event ) {
-				//props.setAttributes( { buttonLink: event.target.value } );
-				event.preventDefault();
 			}
 
 			return [
@@ -103,7 +108,18 @@
 				!! focus && el(
 					blocks.InspectorControls,
 					{ key: 'inspector' },
-					el( components.PanelColor, { title: i18n.__( 'Text Color' ), colorValue: textColor, initialOpen: false },
+					el( components.PanelColor, { title: i18n.__( 'Header Text Color' ), colorValue: headerTextColor, initialOpen: false },
+						el(
+							blocks.ColorPalette,
+							{
+								value: headerTextColor,
+								onChange: function( colorValue ) {
+									props.setAttributes( { headerTextColor: colorValue } );
+								},
+							}
+						)
+					),
+					el( components.PanelColor, { title: i18n.__( 'Body Text Color' ), colorValue: textColor, initialOpen: false },
 						el(
 							blocks.ColorPalette,
 							{
@@ -114,13 +130,24 @@
 							}
 						)
 					),
-					el( components.PanelColor, { title: i18n.__( 'Button Color' ), colorValue: buttonColor, initialOpen: false },
+					el( components.PanelColor, { title: i18n.__( 'Button Background Color' ), colorValue: buttonColor, initialOpen: false },
 						el(
 							blocks.ColorPalette,
 							{
 								value: buttonColor,
 								onChange: function( colorValue ) {
 									props.setAttributes( { buttonColor: colorValue } );
+								},
+							}
+						)
+					),
+					el( components.PanelColor, { title: i18n.__( 'Header Background Color' ), colorValue: headerBGColor, initialOpen: false },
+						el(
+							blocks.ColorPalette,
+							{
+								value: headerBGColor,
+								onChange: function( colorValue ) {
+									props.setAttributes( { headerBGColor: colorValue } );
 								},
 							}
 						)
@@ -139,11 +166,11 @@
 				),
 				el( 'div', { className: props.className, style: { backgroundColor: attributes.backgroundColor } },
 					el( 'div', { className: 'organic-pricing-table-content', style: { textAlign: alignment } },
-						el( 'div', { className: 'organic-pricing-table-header' },
+						el( 'div', { className: 'organic-pricing-table-header', style: { backgroundColor: attributes.headerBGColor } },
 							el( blocks.Editable, {
 								tagName: 'h2',
 								inlineToolbar: true,
-								style: { color: attributes.textColor },
+								style: { color: attributes.headerTextColor },
 								placeholder: i18n.__( 'Package Title' ),
 								value: attributes.title,
 								onChange: function( newTitle ) {
@@ -157,7 +184,7 @@
 							el( blocks.Editable, {
 								tagName: 'h4',
 								inlineToolbar: true,
-								style: { color: attributes.textColor },
+								style: { color: attributes.headerTextColor },
 								placeholder: i18n.__( 'Package Subtitle' ),
 								value: attributes.subtitle,
 								onChange: function( newSubtitle ) {
@@ -171,7 +198,6 @@
 						),
 						el( 'div', { className: 'organic-pricing-table-price' },
 							el( blocks.Editable, {
-								// className: 'organic-pricing-table-price',
 								tagName: 'h6',
 								inlineToolbar: true,
 								style: { color: attributes.textColor },
@@ -186,7 +212,6 @@
 								},
 							} ),
 							el( blocks.Editable, {
-								className: 'organic-pricing-table-details',
 								tagName: 'p',
 								inlineToolbar: true,
 								style: { color: attributes.textColor },
@@ -218,15 +243,15 @@
 							},
 						} ),
 						el( 'div', { className: 'organic-pricing-table-footer' },
-							el( 'span', { className: 'organic-pricing-button', style: { backgroundColor: attributes.buttonColor } },
+							el( 'span', { key: 'button', className: 'organic-pricing-button', style: { backgroundColor: attributes.buttonColor } },
 								el( blocks.Editable, {
 									className: 'organic-pricing-button-link',
 									tagName: 'span',
 									formattingControls: [ 'bold', 'italic', 'strikethrough' ],
 									placeholder: i18n.__( 'Buy Package' ),
 									value: attributes.buttonText,
-									onChange: function( value ) {
-										props.setAttributes( { buttonText: value } );
+									onChange: function( newButtonText ) {
+										props.setAttributes( { buttonText: newButtonText } );
 									},
 									focus: focusedEditable === 'buttonText' ? focus : null,
 									onFocus: function( focus ) {
@@ -238,15 +263,17 @@
 									key: 'form-link',
 									className: 'blocks-button__inline-link',
 									style: { margin: '0 auto' },
-									onSubmit: setLink,
+									onSubmit: function( event ) {
+										event.preventDefault();
+									}
 								},
 								el( components.Dashicon, {
 									icon: 'admin-links',
 								} ),
 								el( blocks.UrlInput, {
 									value: attributes.buttonLink,
-									onChange: function( value ) {
-										props.setAttributes( { buttonLink: value } );
+									onChange: function( newButtonLink ) {
+										props.setAttributes( { buttonLink: newButtonLink } );
 									}
 								}	),
 								el( components.IconButton, {
@@ -262,15 +289,15 @@
 		},
 
 		save: function( props ) {
+
 			var attributes = props.attributes;
-			var alignment = props.attributes.alignment;
 
 			return (
 				el( 'div', { className: props.className, style: { backgroundColor: attributes.backgroundColor } },
 					el( 'div', { className: 'organic-pricing-table-content', style: { textAlign: attributes.alignment } },
-						el( 'div', { className: 'organic-pricing-table-header' },
-							el( 'h2', { style: { color: attributes.textColor } }, attributes.title ),
-							attributes.subtitle && el( 'h4', { style: { color: attributes.textColor } }, attributes.subtitle ),
+						el( 'div', { className: 'organic-pricing-table-header', style: { backgroundColor: attributes.headerBGColor } },
+							el( 'h2', { style: { color: attributes.headerTextColor } }, attributes.title ),
+							attributes.subtitle && el( 'h4', { style: { color: attributes.headerTextColor } }, attributes.subtitle ),
 						),
 						el( 'div', { className: 'organic-pricing-table-price' },
 							attributes.price && el( 'h6', { style: { color: attributes.textColor } }, attributes.price ),
@@ -279,7 +306,7 @@
 						attributes.features && el( 'ul', { className: 'organic-pricing-features', style: { color: attributes.textColor } }, attributes.features ),
 						attributes.buttonLink && el( 'div', { className: 'organic-pricing-table-footer' },
 							el( 'a', { className: 'organic-pricing-button', style: { backgroundColor: attributes.buttonColor }, href: attributes.buttonLink },
-								el( 'span', {}, attributes.buttonText ),
+								el( 'span', { className: 'organic-pricing-button-link' }, attributes.buttonText ),
 							)
 						)
 					)

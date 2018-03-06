@@ -1,0 +1,73 @@
+/**
+ * ----------------------------------------------------------------------------
+ * Frontend CSS
+ * ----------------------------------------------------------------------------
+ */
+
+.wp-block-organic-split-block {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	background-color: #f4f4f4;
+	width: 100%;
+	padding: 0px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.wp-block-organic-split-block.alignfull .organic-split-image {
+	height: 50vw;
+}
+.wp-block-organic-split-block.alignfull .organic-split-content {
+	padding: 48px;
+}
+.organic-split-image {
+	display: block;
+	align-self: stretch;
+	background-size: cover;
+	background-position: center;
+	width: 50%;
+}
+.organic-split-image img {
+	opacity: 0;
+	/* margin: -9999px; */
+}
+.organic-split-content {
+	width: 50%;
+	padding: 24px;
+	box-sizing: border-box;
+}
+.organic-split-content h4 {
+	line-height: 1.2;
+	margin: 0px;
+	padding: 0px;
+}
+a.organic-split-button {
+	position: relative;
+	display: inline-block;
+	background-color: #99cc33;
+	color: #ffffff !important;
+	text-decoration: none !important;
+	margin-top: 18px;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+a.organic-split-button::before {
+	position: absolute;
+	top: 0; left: 0;
+	content: '';
+	background-color: rgba(0, 0, 0, 0);
+	width: 100%;
+	height: 100%;
+	border-radius: 3px;
+	transition: all .25s ease-in-out;
+}
+a.organic-split-button:hover::before {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+a.organic-split-button span {
+	position: relative;
+	z-index: 8;
+}

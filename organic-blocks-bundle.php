@@ -49,6 +49,7 @@ if ( ! defined( 'OBB_URL' ) ) {
  */
 function obb_scripts() {
 
+	// Global Styles.
 	wp_enqueue_style(
 		'obb-fontawesome', // Handle.
 		plugins_url( 'css/font-awesome.css', __FILE__ ) // Font Awesome for social media icons.
@@ -58,11 +59,21 @@ function obb_scripts() {
 add_action( 'wp_enqueue_scripts', 'obb_scripts' );
 
 /**
- * BLOCK: Profile Block.
+ * BLOCK: Team Member Block.
  */
-require_once( OBB_DIR . '/block/profile/index.php' );
+require_once( OBB_DIR . '/block/team-member/index.php' );
 
 /**
  * BLOCK: Pricing Table Block.
  */
 require_once( OBB_DIR . '/block/pricing-table/index.php' );
+
+/**
+ * BLOCK: Call To Action Block.
+ */
+require_once( OBB_DIR . '/block/call-to-action/index.php' );
+
+/**
+ * BLOCK: Split Content Block.
+ */
+require_once( OBB_DIR . '/block/split-content/index.php' );

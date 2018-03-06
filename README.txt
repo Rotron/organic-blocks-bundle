@@ -16,7 +16,7 @@ The Organic Profile Block is designed to work with the [Gutenberg editor](https:
 
 **Contribute:**
 
-This plugin is open source software, and you may actively contribute on [Github](https://github.com/Invulu/organic-profile-block "Organic Profile Block Repository").
+This plugin is open source software, and you may actively contribute on [Github](https://github.com/Invulu/organic-team-member-block "Organic Profile Block Repository").
 
 == Installation & Setup ==
 

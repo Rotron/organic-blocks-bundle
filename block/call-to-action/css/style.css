@@ -1,0 +1,48 @@
+/**
+ * ----------------------------------------------------------------------------
+ * Frontend CSS
+ * ----------------------------------------------------------------------------
+ */
+
+.wp-block-organic-action-block {
+	position: relative;
+	background-color: #f4f4f4;
+	width: 100%;
+	padding: 48px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.wp-block-organic-action-block h2 {
+	line-height: 1.2;
+	margin: 0px;
+	padding: 0px;
+}
+a.organic-action-button {
+	position: relative;
+	display: inline-block;
+	background-color: #99cc33;
+	color: #ffffff !important;
+	text-decoration: none !important;
+	margin-top: 18px;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+a.organic-action-button::before {
+	position: absolute;
+	top: 0; left: 0;
+	content: '';
+	background-color: rgba(0, 0, 0, 0);
+	width: 100%;
+	height: 100%;
+	border-radius: 3px;
+	transition: all .25s ease-in-out;
+}
+a.organic-action-button:hover::before {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+a.organic-action-button span {
+	position: relative;
+	z-index: 8;
+}

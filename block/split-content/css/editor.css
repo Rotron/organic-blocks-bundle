@@ -4,16 +4,20 @@
  * ----------------------------------------------------------------------------
  */
 
-.wp-block-organic-pricing-table-block {
+.wp-block-organic-split-table-block {
 	position: relative;
 	background-color: #f9f9f9;
 }
-span.organic-pricing-button {
-	display: block;
+span.organic-split-button {
+	display: inline-block;
 	background-color: #99cc33;
 	color: #ffffff;
+	margin-top: 18px;
 	padding: 12px 24px;
 	border: none;
 	border-radius: 3px;
 	box-sizing: border-box;
+}
+.organic-split-button-link.blocks-rich-text__tinymce.mce-content-body {
+	left: 0;
 }

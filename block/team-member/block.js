@@ -6,9 +6,11 @@
 	var MediaUpload = wp.blocks.MediaUpload;
 	var InspectorControls = wp.blocks.InspectorControls;
 	var TextControl = wp.blocks.InspectorControls.TextControl;
+	var ColorPalette = wp.blocks.ColorPalette;
+	var ContrastChecker = wp.blocks.ContrastChecker;
 
-	blocks.registerBlockType( 'organic/profile-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
-		title: i18n.__( 'Profile' ), // The title of our block.
+	blocks.registerBlockType( 'organic/team-member-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
+		title: i18n.__( 'Team Member' ), // The title of our block.
 		icon: 'businessman', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
 		category: 'common', // The category of the block.
 		attributes: { // Necessary for saving block content.
@@ -54,6 +56,14 @@
 			},
 			emailAddress: {
 				type: 'string',
+			},
+			textColor: {
+				type: 'string',
+				default: '#000000',
+			},
+			bgColor: {
+				type: 'string',
+				default: '#f4f4f4',
 			}
 		},
 
@@ -68,6 +78,8 @@
 			var instagramURL = props.attributes.instagramURL;
 			var linkedURL = props.attributes.linkedURL;
 			var emailAddress = props.attributes.emailAddress;
+			var textColor = props.attributes.textColor;
+			var bgColor = props.attributes.bgColor;
 
 			var onSelectImage = function( media ) {
 				return props.setAttributes( {
@@ -173,10 +185,32 @@
 							},
 						}
 					),
+					el( components.PanelColor, { title: i18n.__( 'Text Color' ), colorValue: textColor, initialOpen: false },
+						el(
+							blocks.ColorPalette,
+							{
+								value: textColor,
+								onChange: function( colorValue ) {
+									props.setAttributes( { textColor: colorValue } );
+								},
+							}
+						)
+					),
+					el( components.PanelColor, { title: i18n.__( 'Background Color' ), colorValue: bgColor, initialOpen: false },
+						el(
+							blocks.ColorPalette,
+							{
+								value: bgColor,
+								onChange: function( colorValue ) {
+									props.setAttributes( { bgColor: colorValue } );
+								},
+							}
+						)
+					)
 				),
-				el( 'div', { className: props.className },
+				el( 'div', { className: props.className, style: { backgroundColor: attributes.bgColor } },
 					el( 'div', {
-						className: attributes.mediaID ? 'organic-profile-image image-active' : 'organic-profile-image image-inactive',
+						className: attributes.mediaID ? 'organic-team-member-image image-active' : 'organic-team-member-image image-inactive',
 						style: attributes.mediaID ? { backgroundImage: 'url('+attributes.mediaURL+')' } : {}
 					},
 						el( blocks.MediaUpload, {
@@ -193,12 +227,12 @@
 							}
 						} )
 					),
-					el( 'div', {
-						className: 'organic-profile-content', style: { textAlign: alignment } },
+					el( 'div', { className: 'organic-team-member-content', style: { textAlign: alignment } },
 						el( blocks.Editable, {
 							tagName: 'h3',
 							inline: false,
-							placeholder: i18n.__( 'Profile Name' ),
+							placeholder: i18n.__( 'Team Member Name' ),
+							style: { color: attributes.textColor },
 							value: attributes.title,
 							onChange: function( newTitle ) {
 								props.setAttributes( { title: newTitle } );
@@ -212,6 +246,7 @@
 							tagName: 'h5',
 							inline: false,
 							placeholder: i18n.__( 'Subtitle' ),
+							style: { color: attributes.textColor },
 							value: attributes.subtitle,
 							onChange: function( newSubtitle ) {
 								props.setAttributes( { subtitle: newSubtitle } );
@@ -225,6 +260,7 @@
 							tagName: 'p',
 							inline: true,
 							placeholder: i18n.__( 'Write a brief bio...' ),
+							style: { color: attributes.textColor },
 							value: attributes.bio,
 							onChange: function( newBio ) {
 								props.setAttributes( { bio: newBio } );
@@ -234,7 +270,7 @@
 								props.setFocus( _.extend( {}, focus, { editable: 'bio' } ) );
 							},
 						} ),
-						el( 'div', { className: 'organic-profile-social' },
+						el( 'div', { className: 'organic-team-member-social' },
 							attributes.facebookURL &&
 							el( 'a', {
 									className: 'social-link',
@@ -282,20 +318,19 @@
 		},
 
 		save: function( props ) {
+
 			var attributes = props.attributes;
-			var alignment = props.attributes.alignment;
 
 			return (
-				el( 'div', { className: props.className },
-					attributes.mediaURL &&
-					el( 'div', { className: 'organic-profile-image', style: { backgroundImage: 'url('+attributes.mediaURL+')' } },
+				el( 'div', { className: props.className, style: { backgroundColor: attributes.bgColor } },
+					attributes.mediaURL && el( 'div', { className: 'organic-team-member-image', style: { backgroundImage: 'url('+attributes.mediaURL+')' } },
 						el( 'img', { src: attributes.mediaURL } ),
 					),
-					el( 'div', { className: 'organic-profile-content', style: { textAlign: attributes.alignment } },
-						el( 'h3', {}, attributes.title ),
-						attributes.subtitle && el( 'h5', {}, attributes.subtitle ),
-						attributes.bio && el( 'p', {}, attributes.bio ),
-						el( 'div', { className: 'organic-profile-social' },
+					el( 'div', { className: 'organic-team-member-content', style: { textAlign: attributes.alignment } },
+						el( 'h3', { style: { color: attributes.textColor } }, attributes.title ),
+						attributes.subtitle && el( 'h5', { style: { color: attributes.textColor } }, attributes.subtitle ),
+						attributes.bio && el( 'p', { style: { color: attributes.textColor } }, attributes.bio ),
+						el( 'div', { className: 'organic-team-member-social' },
 							attributes.facebookURL &&
 							el( 'a', {
 									className: 'social-link',
