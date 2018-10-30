@@ -1,0 +1,85 @@
+/**
+ * ----------------------------------------------------------------------------
+ * Frontend CSS
+ * ----------------------------------------------------------------------------
+ */
+
+.wp-block-organic-testimonial-block {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	background-color: #ffffff;
+	margin: 0px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.wp-block-organic-testimonial-block.alignfull {
+	border-radius: 0px;
+}
+.wp-block-organic-testimonial-block ul,
+.wp-block-organic-testimonial-block li {
+	list-style: none;
+	margin: 0; padding: 0;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-image {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	max-width: 180px;
+	max-height: 180px;
+	margin: 0px auto;
+	border-radius: 50%;
+	border: 12px solid #ffffff;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
+	overflow: hidden;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-image img {
+	opacity: 0;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-content {
+	width: 100%;
+	align-self: center;
+	padding: 18px;
+	box-sizing: border-box;
+	border-radius: 3px;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-content h3 {
+	margin: 0px;
+	padding: 0px;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-content h5 {
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	margin: 0px;
+	padding: 8px 0px;
+	opacity: 0.6;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-content p {
+	line-height: 1.6;
+	margin: 0px;
+	padding: 8px 0px;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-social {
+	padding-top: 12px;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-social:empty {
+	display: none;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-social .social-link {
+	color: rgba(0, 0, 0, 0.4);
+	padding: 6px 12px;
+	font-size: 18px;
+	text-decoration: none;
+	border-left: 1px solid rgba(0, 0, 0, 0.12);
+	border-bottom: none;
+	box-shadow: none;
+}
+.wp-block-organic-testimonial-block .organic-testimonial-social .social-link:hover {
+	color: rgba(0, 0, 0, 1);
+}
+.wp-block-organic-testimonial-block .organic-testimonial-social .social-link:first-child {
+	border: none;
+}

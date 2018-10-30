@@ -1,8 +1,8 @@
 <?php
 /**
- * BLOCK: Pricing Table
+ * BLOCK: Profile
  *
- * Gutenberg Custom Pricing Table Block assets.
+ * Gutenberg Custom Profile Block assets.
  *
  * @since   1.0.0
  * @package OPB
@@ -22,41 +22,41 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-function organic_split_block_editor_assets() {
+function organic_testimonial_block_editor_assets() {
 	// Scripts.
 	wp_enqueue_script(
-		'organic-split-block', // Handle.
+		'organic-testimonial-block', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'underscore' ), // Dependencies, defined above.
 		filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ) // filemtime — Gets file modification time.
 	);
 
 	// Styles.
 	wp_enqueue_style(
-		'organic-split-block-editor', // Handle.
+		'organic-testimonial-block-editor', // Handle.
 		plugins_url( 'css/editor.css', __FILE__ ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		filemtime( plugin_dir_path( __FILE__ ) . 'css/editor.css' ) // filemtime — Gets file modification time.
 	);
-} // End function organic_split_block_editor_assets().
+} // End function organic_testimonial_block_editor_assets().
 
 // Hook: Editor assets.
-add_action( 'enqueue_block_editor_assets', 'organic_split_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'organic_testimonial_block_editor_assets' );
 
 /**
  * Enqueue the block's assets for the frontend.
  *
  * @since 1.0.0
  */
-function organic_split_block_assets() {
+function organic_testimonial_block_assets() {
 	// Styles.
 	wp_enqueue_style(
-		'organic-split-block-frontend', // Handle.
+		'organic-testimonial-block-frontend', // Handle.
 		plugins_url( 'css/style.css', __FILE__ ), // Block frontend CSS.
 		array( 'wp-blocks' ), // Dependency to include the CSS after it.
 		filemtime( plugin_dir_path( __FILE__ ) . 'css/style.css' ) // filemtime — Gets file modification time.
 	);
-} // End function organic_split_block_block_assets().
+} // End function organic_testimonial_block_block_assets().
 
 // Hook: Frontend assets.
-add_action( 'enqueue_block_assets', 'organic_split_block_assets' );
+add_action( 'enqueue_block_assets', 'organic_testimonial_block_assets' );

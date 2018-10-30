@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 // Plugin version.
 if ( ! defined( 'OBB_VERSION' ) ) {
-	define( 'OBB_VERSION', '1.0.1' );
+	define( 'OBB_VERSION', '1.0' );
 }
 
 if ( ! defined( 'OBB_NAME' ) ) {
@@ -71,9 +71,19 @@ require_once( OBB_DIR . '/block/pricing-table/index.php' );
 /**
  * BLOCK: Call To Action Block.
  */
-require_once( OBB_DIR . '/block/call-to-action/index.php' );
+// require_once( OBB_DIR . '/block/call-to-action/index.php' );
 
 /**
  * BLOCK: Split Content Block.
  */
-require_once( OBB_DIR . '/block/split-content/index.php' );
+// require_once( OBB_DIR . '/block/split-content/index.php' );
+
+/**
+ * BLOCK: Notification Block.
+ */
+// require_once( OBB_DIR . '/block/notification/index.php' );
+
+/**
+ * BLOCK: Testimonial Block.
+ */
+// require_once( OBB_DIR . '/block/testimonial/index.php' );

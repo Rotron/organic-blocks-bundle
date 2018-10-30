@@ -22,41 +22,35 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-function organic_team_member_block_editor_assets() {
+function organic_team_member_block() {
+
 	// Scripts.
-	wp_enqueue_script(
-		'organic-team-member-block', // Handle.
+	wp_register_script(
+		'organic-team-member-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
-		filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ) // filemtime — Gets file modification time.
+		array( 'wp-blocks', 'wp-element', 'wp-i18n' ) // Dependencies, defined above.
 	);
 
 	// Styles.
-	wp_enqueue_style(
-		'organic-team-member-block-editor', // Handle.
+	wp_register_style(
+		'organic-team-member-block-editor-style', // Handle.
 		plugins_url( 'css/editor.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
-		filemtime( plugin_dir_path( __FILE__ ) . 'css/editor.css' ) // filemtime — Gets file modification time.
+		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
 	);
-} // End function organic_team_member_block_editor_assets().
-
-// Hook: Editor assets.
-add_action( 'enqueue_block_editor_assets', 'organic_team_member_block_editor_assets' );
-
-/**
- * Enqueue the block's assets for the frontend.
- *
- * @since 1.0.0
- */
-function organic_team_member_block_assets() {
-	// Styles.
-	wp_enqueue_style(
-		'organic-team-member-block-frontend', // Handle.
-		plugins_url( 'css/style.css', __FILE__ ), // Block frontend CSS.
-		array( 'wp-blocks' ), // Dependency to include the CSS after it.
-		filemtime( plugin_dir_path( __FILE__ ) . 'css/style.css' ) // filemtime — Gets file modification time.
+	wp_register_style(
+		'organic-team-member-block-frontend-style', // Handle.
+		plugins_url( 'css/style.css', __FILE__ ), // Block editor CSS.
+		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
 	);
-} // End function organic_team_member_block_block_assets().
 
-// Hook: Frontend assets.
-add_action( 'enqueue_block_assets', 'organic_team_member_block_assets' );
+	// Here we actually register the block with WP, again using our namespacing
+	// We also specify the editor script to be used in the Gutenberg interface
+	register_block_type( 'organic/team-member-block', array(
+		'editor_script' => 'organic-team-member-block-script',
+		'editor_style' => 'organic-team-member-block-editor-style',
+		'style' => 'organic-team-member-block-frontend-style',
+	) );
+
+} // End function organic_team_member_block().
+
+add_action( 'init', 'organic_team_member_block' );

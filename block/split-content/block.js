@@ -9,6 +9,7 @@
 	var ColorPalette = wp.blocks.ColorPalette;
 	var ContrastChecker = wp.blocks.ContrastChecker;
 	var UrlInput = wp.blocks.UrlInput;
+	var RichText = wp.blocks.RichText;
 
 	blocks.registerBlockType( 'organic/split-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
 		title: i18n.__( 'Split Content' ), // The title of our block.
@@ -24,6 +25,9 @@
 				type: 'array',
 				source: 'children',
 				selector: 'p',
+			},
+			textTools: {
+				type: 'string',
 			},
 			textAlignment: {
 				type: 'string',
@@ -53,6 +57,10 @@
 				source: 'children',
 				selector: '.organic-split-button-link',
 			},
+			flipContent: {
+				type: 'boolean',
+				default: false,
+			},
 			titleColor: {
 				type: 'string',
 				default: '#000000',
@@ -67,7 +75,6 @@
 			},
 			bgColor: {
 				type: 'string',
-				default: '#f4f4f4',
 			}
 		},
 
@@ -81,12 +88,12 @@
 		edit: function( props ) {
 
 			var focus = props.focus;
-			var focusedEditable = props.focus ? props.focus.editable || 'title' : null;
 			var attributes = props.attributes;
 			var textAlignment = props.attributes.textAlignment;
 			var blockAlignment = props.attributes.blockAlignment;
 			var buttonText = props.attributes.buttonText;
 			var buttonLink = props.attributes.buttonLink;
+			var flipContent = props.attributes.flipContent;
 			var titleColor = props.attributes.titleColor;
 			var textColor = props.attributes.textColor;
 			var buttonColor = props.attributes.buttonColor;
@@ -99,12 +106,21 @@
 				} );
 			};
 
+			var flipClass = attributes.flipContent ? ' organic-flip-content' : '';
+
 			function onChangeAlignment( newAlignment ) {
 				props.setAttributes( { textAlignment: newAlignment } );
+			}
+			function onChangeFormat( newFormat ) {
+				props.setAttributes( { textTools: newFormat } );
 			}
 
 			function updateBlockAlignment( newBlockAlignment ) {
 				props.setAttributes( { blockAlignment: newBlockAlignment } );
+			}
+
+			function toggleFlipContent( newFlipContent ) {
+				props.setAttributes( { flipContent: newFlipContent } );
 			}
 
 			return [
@@ -149,6 +165,16 @@
 				!! focus && el(
 					blocks.InspectorControls,
 					{ key: 'inspector' },
+					el( components.PanelBody, { title: i18n.__( 'Display Settings' ) },
+						el(
+							components.ToggleControl,
+							{
+								label: i18n.__( 'Flip Content' ),
+								checked: !! flipContent,
+								onChange: toggleFlipContent,
+							}
+						)
+					),
 					el( components.PanelColor, { title: i18n.__( 'Title Text Color' ), colorValue: titleColor, initialOpen: false },
 						el(
 							blocks.ColorPalette,
@@ -194,7 +220,10 @@
 						)
 					)
 				),
-				el( 'div', { className: props.className, style: { backgroundColor: attributes.bgColor } },
+				el( 'div', {
+					className: props.className + flipClass,
+					style: { backgroundColor: attributes.bgColor }
+					},
 					el( 'div', {
 						className: attributes.mediaID ? 'organic-split-image image-active' : 'organic-split-image image-inactive',
 						style: attributes.mediaID ? { backgroundImage: 'url('+attributes.mediaURL+')' } : {}
@@ -214,7 +243,7 @@
 						} )
 					),
 					el( 'div', { className: 'organic-split-content', style: { textAlign: textAlignment } },
-						el( blocks.Editable, {
+						el( blocks.RichText, {
 							tagName: 'h4',
 							inlineToolbar: true,
 							style: { color: attributes.titleColor },
@@ -223,27 +252,24 @@
 							onChange: function( newTitle ) {
 								props.setAttributes( { title: newTitle } );
 							},
-							focus: focusedEditable === 'title' ? focus : null,
-							onFocus: function( focus ) {
-								props.setFocus( _.extend( {}, focus, { editable: 'title' } ) );
-							},
+							focus: focus,
+							onFocus: props.setFocus,
 						} ),
-						el( blocks.Editable, {
+						el( blocks.RichText, {
 							tagName: 'p',
 							inlineToolbar: true,
+							formattingControls: [ 'bold', 'italic', 'strikethrough' ],
 							style: { color: attributes.textColor },
 							placeholder: i18n.__( 'Add your body content...' ),
 							value: attributes.content,
-							onChange: function( newDetails ) {
-								props.setAttributes( { content: newDetails } );
+							onChange: function( newContent ) {
+								props.setAttributes( { content: newContent } );
 							},
-							focus: focusedEditable === 'content' ? focus : null,
-							onFocus: function( focus ) {
-								props.setFocus( _.extend( {}, focus, { editable: 'content' } ) );
-							},
+							focus: focus,
+							onFocus: props.setFocus,
 						} ),
 						el( 'span', { key: 'button', className: 'organic-split-button', style: { backgroundColor: attributes.buttonColor } },
-							el( blocks.Editable, {
+							el( blocks.RichText, {
 								className: 'organic-split-button-link',
 								tagName: 'span',
 								formattingControls: [ 'bold', 'italic', 'strikethrough' ],
@@ -252,10 +278,8 @@
 								onChange: function( newButtonText ) {
 									props.setAttributes( { buttonText: newButtonText } );
 								},
-								focus: focusedEditable === 'buttonText' ? focus : null,
-								onFocus: function( focus ) {
-									props.setFocus( _.extend( {}, focus, { editable: 'buttonText' } ) );
-								},
+								focus: focus,
+								onFocus: props.setFocus,
 							} )
 						),
 						!! focus && el( 'form', {
@@ -289,11 +313,13 @@
 		save: function( props ) {
 
 			var attributes = props.attributes;
+			var flipClass = attributes.flipContent ? ' organic-flip-content' : '';
+			var alignClass = attributes.blockAlignment === 'wide' || attributes.blockAlignment === 'full' ? 'align'+attributes.blockAlignment : null;
 
 			return (
 				el( 'div', {
 					className: props.className,
-					className: attributes.blockAlignment === 'wide' || attributes.blockAlignment === 'full' ? 'align'+attributes.blockAlignment : null,
+					className: alignClass + flipClass,
 					style: { backgroundColor: attributes.bgColor } },
 					el( 'div', { className: 'organic-split-image', style: { backgroundImage: 'url('+attributes.mediaURL+')' } },
 						el( 'img', { src: attributes.mediaURL } ),

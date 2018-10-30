@@ -1,10 +1,10 @@
 === Organic Blocks Bundle ===
 Contributors: itsdavidmorgan, organicthemes
 Donate link: https://organicthemes.com
-Tags: gutenberg, blocks, custom block, profile, bio, biography, testimonial, social media, staff, author, employee, fontawesome, icons
-Stable tag: 1.0.1
-Requires at least: 4.8
-Tested up to: 4.9.3
+Tags: gutenberg, blocks, custom block, profile, bio, biography, testimonial, social media, staff, author, employee, team member, pricing table, notification, call to action, hero, split content, fontawesome, icons
+Stable tag: 1.0
+Requires at least: 4.9
+Tested up to: 4.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,16 @@ The Organic Blocks Bundle is a collection of custom blocks for the Gutenberg edi
 
 == Description ==
 
-The Organic Profile Block is designed to work with the [Gutenberg editor](https://wordpress.org/plugins/gutenberg/ "Gutenberg Plugin"). This custom block is designed to display personal profiles. It includes options to add a profile image, name, title, biography, and social media links. The social media options include icon links to personal profiles for Facebook, Twitter, Instagram, LinkedIn, and email. The profile block is an excellent solution for creating author profiles on posts, staff or employee pages, and testimonials.
+The Organic Blocks Bundle is collection of custom blocks designed to work with the [Gutenberg editor](https://wordpress.org/plugins/gutenberg/ "Gutenberg Plugin"). Currently, the plugin features 8 useful custom blocks for building dynamic pages and posts using the new WordPress editor.
+
+= Blocks Included =
+
+* **Pricing Table Block** [View Example](https://organicthemes.com/demo/startup/widgets/hero-widget/ "Hero Widget Example") – A full browser height section with a background image, featured text and a call to action.
+* **Notification Block** [View Example](https://organicthemes.com/demo/startup/widgets/blog-widget/ "Blog Widget Example") – Display a section of blog posts from any category in a chosen layout.
+* **Split Content Block** [View Example](https://organicthemes.com/demo/startup/widgets/content-slideshow-widget/ "Content Slideshow Widget Example") – A full width slideshow of featured posts with background images.
+* **Team Member Block** [View Example](https://organicthemes.com/demo/startup/widgets/feature-list-widget/ "Feature List Widget Example") – A list of features with icons displayed in multiple column layouts.
+* **Testimonial Block** [View Example](https://organicthemes.com/demo/startup/widgets/portfolio-widget/ "Portfolio Widget Example") – A section of posts displayed as portfolio images in a masonry layout.
+* **Call To Action Block** [View Example](https://organicthemes.com/demo/startup/widgets/subpage-widget/ "Subpage Widget Example") – Display existing page content as a section within another page or use custom content.
 
 **Contribute:**
 

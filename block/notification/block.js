@@ -1,4 +1,4 @@
-( function( blocks, components, element ) {
+( function( blocks, components, i18n, element ) {
 	var el = element.createElement;
 	var children = blocks.source.children;
 	var BlockControls = wp.blocks.BlockControls;
@@ -9,55 +9,36 @@
 	var ContrastChecker = wp.blocks.ContrastChecker;
 	var UrlInput = wp.blocks.UrlInput;
 
-	blocks.registerBlockType( 'organic/action-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
-		title: i18n.__( 'Call To Action' ), // The title of our block.
-		icon: 'megaphone', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
+	blocks.registerBlockType( 'organic/notification-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
+		title: i18n.__( 'Notification' ), // The title of our block.
+		icon: 'warning', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
+		supports: { anchor: true, },
 		category: 'common', // The category of the block.
 		attributes: { // Necessary for saving block content.
-			title: {
-				type: 'array',
-				source: 'children',
-				selector: 'h2',
-			},
 			content: {
 				type: 'array',
 				source: 'children',
 				selector: 'p',
 			},
+			dismissNotification: {
+				type: 'boolean',
+				default: true,
+			},
 			textAlignment: {
 				type: 'string',
-				default: 'center',
+				default: 'left',
 			},
 			blockAlignment: {
 				type: 'string',
 				default: '',
 			},
-			buttonLink: {
-				type: 'string',
-				source: 'attribute',
-				selector: 'a',
-				attribute: 'href',
-			},
-			buttonText: {
-				type: 'array',
-				source: 'children',
-				selector: '.organic-action-button-link',
-			},
-			titleColor: {
-				type: 'string',
-				default: '#000000',
-			},
 			textColor: {
 				type: 'string',
-				default: '#666666',
-			},
-			buttonColor: {
-				type: 'string',
-				default: '#99cc33',
+				default: '#609010',
 			},
 			bgColor: {
 				type: 'string',
-				default: '#f4f4f4',
+				default: '#d0eaa7',
 			}
 		},
 
@@ -74,11 +55,8 @@
 			var attributes = props.attributes;
 			var textAlignment = props.attributes.textAlignment;
 			var blockAlignment = props.attributes.blockAlignment;
-			var buttonText = props.attributes.buttonText;
-			var buttonLink = props.attributes.buttonLink;
-			var titleColor = props.attributes.titleColor;
+			var dismissNotification = props.attributes.dismissNotification;
 			var textColor = props.attributes.textColor;
-			var buttonColor = props.attributes.buttonColor;
 			var bgColor = props.attributes.bgColor;
 
 			function onChangeAlignment( newAlignment ) {
@@ -87,6 +65,10 @@
 
 			function updateBlockAlignment( newBlockAlignment ) {
 				props.setAttributes( { blockAlignment: newBlockAlignment } );
+			}
+
+			function toggleDismiss( newDismiss ) {
+				props.setAttributes( { dismissNotification: newDismiss } );
 			}
 
 			return [
@@ -112,14 +94,13 @@
 				!! focus && el(
 					blocks.InspectorControls,
 					{ key: 'inspector' },
-					el( components.PanelColor, { title: i18n.__( 'Title Text Color' ), colorValue: titleColor, initialOpen: false },
+					el( components.PanelBody, { title: i18n.__( 'Display Settings' ) },
 						el(
-							blocks.ColorPalette,
+							components.ToggleControl,
 							{
-								value: titleColor,
-								onChange: function( colorValue ) {
-									props.setAttributes( { titleColor: colorValue } );
-								},
+								label: i18n.__( 'Dismissible' ),
+								checked: !! dismissNotification,
+								onChange: toggleDismiss,
 							}
 						)
 					),
@@ -130,17 +111,6 @@
 								value: textColor,
 								onChange: function( colorValue ) {
 									props.setAttributes( { textColor: colorValue } );
-								},
-							}
-						)
-					),
-					el( components.PanelColor, { title: i18n.__( 'Button Background Color' ), colorValue: buttonColor, initialOpen: false },
-						el(
-							blocks.ColorPalette,
-							{
-								value: buttonColor,
-								onChange: function( colorValue ) {
-									props.setAttributes( { buttonColor: colorValue } );
 								},
 							}
 						)
@@ -160,66 +130,17 @@
 				el( 'div', { className: props.className, style: { backgroundColor: attributes.bgColor } },
 					el( 'div', { className: 'organic-block-content', style: { textAlign: textAlignment } },
 						el( blocks.RichText, {
-							tagName: 'h2',
-							inlineToolbar: true,
-							style: { color: attributes.titleColor },
-							placeholder: i18n.__( 'Call To Action Title' ),
-							value: attributes.title,
-							onChange: function( newTitle ) {
-								props.setAttributes( { title: newTitle } );
-							},
-							focus: focus,
-							onFocus: props.setFocus,
-						} ),
-						el( blocks.RichText, {
 							tagName: 'p',
-							inlineToolbar: true,
+							inlineToolbar: 'true',
 							style: { color: attributes.textColor },
-							placeholder: i18n.__( 'Add your body content...' ),
+							placeholder: i18n.__( 'Add your notification text...' ),
 							value: attributes.content,
-							onChange: function( newDetails ) {
-								props.setAttributes( { content: newDetails } );
+							onChange: function( newContent ) {
+								props.setAttributes( { content: newContent } );
 							},
 							focus: focus,
 							onFocus: props.setFocus,
 						} ),
-						el( 'span', { key: 'button', className: 'organic-action-button', style: { backgroundColor: attributes.buttonColor } },
-							el( blocks.RichText, {
-								className: 'organic-action-button-link',
-								tagName: 'span',
-								formattingControls: [ 'bold', 'italic', 'strikethrough' ],
-								placeholder: i18n.__( 'Button Text' ),
-								value: attributes.buttonText,
-								onChange: function( newButtonText ) {
-									props.setAttributes( { buttonText: newButtonText } );
-								},
-								focus: focus,
-								onFocus: props.setFocus,
-							} )
-						),
-						!! focus && el( 'form', {
-								key: 'form-link',
-								className: 'blocks-button__inline-link',
-								style: { margin: '0 auto' },
-								onSubmit: function( event ) {
-									event.preventDefault();
-								}
-							},
-							el( components.Dashicon, {
-								icon: 'admin-links',
-							} ),
-							el( blocks.UrlInput, {
-								value: attributes.buttonLink,
-								onChange: function( newButtonLink ) {
-									props.setAttributes( { buttonLink: newButtonLink } );
-								}
-							}	),
-							el( components.IconButton, {
-								type: 'submit',
-								label: i18n.__( 'Apply' ),
-								icon: 'editor-break',
-							} )
-						)
 					)
 				)
 			];
@@ -235,11 +156,10 @@
 					className: attributes.blockAlignment === 'wide' || attributes.blockAlignment === 'full' ? 'align'+attributes.blockAlignment : null,
 					style: { backgroundColor: attributes.bgColor } },
 					el( 'div', { className: 'organic-block-content', style: { textAlign: attributes.textAlignment } },
-						el( 'h2', { style: { color: attributes.titleColor } }, attributes.title ),
 						attributes.content && el( 'p', { style: { color: attributes.textColor } }, attributes.content ),
-						attributes.buttonLink && el( 'a', { className: 'organic-action-button', style: { backgroundColor: attributes.buttonColor }, href: attributes.buttonLink },
-							el( 'span', { className: 'organic-action-button-link' }, attributes.buttonText ),
-						)
+					),
+					attributes.dismissNotification && el( 'button', { className: 'dismiss-notification' },
+						el( 'i', { className: 'fa fa-times' } )
 					)
 				)
 			);
@@ -249,5 +169,6 @@
 } )(
 	window.wp.blocks,
 	window.wp.components,
+	window.wp.i18n,
 	window.wp.element,
 );

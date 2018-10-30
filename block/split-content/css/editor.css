@@ -4,9 +4,29 @@
  * ----------------------------------------------------------------------------
  */
 
-.wp-block-organic-split-table-block {
-	position: relative;
-	background-color: #f9f9f9;
+.wp-block-organic-split-block .organic-split-image {
+	display: flex;
+	align-items: center;
+}
+.wp-block-organic-split-block .organic-split-image.image-inactive {
+	background: #f4f4f4;
+	min-height: 260px;
+	border: 1px solid #dddddd;
+}
+.wp-block-organic-split-block .organic-split-image.image-active {
+	background-size: cover;
+	background-position: center;
+}
+.wp-block-organic-split-block .organic-split-image button {
+	margin: 0 auto;
+}
+.wp-block-organic-split-block .organic-split-image button.image-button {
+	line-height: 0;
+	padding: 0px;
+}
+.wp-block-organic-split-block .organic-split-image button.image-button img {
+	opacity: 0;
+	margin: 0;
 }
 span.organic-split-button {
 	display: inline-block;
